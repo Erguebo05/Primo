@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Números Primos</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #111;
+      color: #fff;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 5em;
+      margin: 0;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="prime-display">2</div>
+  <script>
+    const primeDisplay = document.getElementById("prime-display");
+    let primes = [2];
+    let currentIndex = 0;
+
+    function isPrime(num) {
+      for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+      }
+      return num > 1;
+    }
+
+    function nextPrime() {
+      let next = primes[primes.length - 1] + 1;
+      while (!isPrime(next)) {
+        next++;
+      }
+      primes.push(next);
+      return next;
+    }
+
+    document.body.addEventListener("click", (event) => {
+      if (event.button === 0) {
+        currentIndex++;
+        if (currentIndex === primes.length) {
+          primeDisplay.textContent = nextPrime();
+        } else {
+          primeDisplay.textContent = primes[currentIndex];
+        }
+      } else if (event.button === 2 && currentIndex > 0) {
+        currentIndex--;
+        primeDisplay.textContent = primes[currentIndex];
+      }
+    });
+
+    document.body.addEventListener("contextmenu", (event) => event.preventDefault());
+  </script>
+</body>
+</html>
